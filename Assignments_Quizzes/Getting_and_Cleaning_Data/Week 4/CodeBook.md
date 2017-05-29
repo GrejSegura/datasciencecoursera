@@ -22,8 +22,7 @@ There 30 subjects observed in the data.
 
 
 
-###### The following variables are the mean and standard deviation measurements 
-###### which were averaged between all observations for the Subject.
+###### The following variables are the mean and standard deviation measurements which were averaged between all observations for the Subject.
 
 3. "tBodyAcc-mean()-X"          
 4. "tBodyAcc-mean()-Y"
