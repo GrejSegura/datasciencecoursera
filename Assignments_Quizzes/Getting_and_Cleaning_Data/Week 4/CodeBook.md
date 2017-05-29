@@ -1,27 +1,23 @@
-# Tidy data set description
+# tidy_data description
 
-### The variables in the tidy data
-Tidy data contains 180 rows and 68 columns. Each row has averaged variables for each subject and each activity.
+### Variable description. 
+1. "Activity"
+Activity has 6 levels of factors labelled as follows:
+- 1. WALKING
+- 2. WALKING_UPSTAIRS
+- 3. WALKING_DOWNSTAIRS
+- 4. SITTING
+- 5. STANDING
+- 6. LAYING
 
-### Only all the variables estimated from mean and standard deviation in the tidy set were kept.
 
-* mean(): Mean value
-* std(): Standard deviation
+2. "Subject"
+There 30 subjects observed in the data.
 
-### The data were averaged based on subject and activity group.
 
-Subject column is numbered sequentially from 1 to 30.
-Activity column has 6 types as listed below.
-1. WALKING
-2. WALKING_UPSTAIRS
-3. WALKING_DOWNSTAIRS
-4. SITTING
-5. STANDING
-6. LAYING
+#### The ff are averaged values of all observations for the Subject and their Activities
+The data set, other than "Activity" and "Subject" contains the mean and standard deviations
 
-### The tidy data contains 6 rows (averaged based on activity) and 68 columns (66 variables and activity labels).
-1. "activitylabel"
-2. "subject"
 3. "tBodyAcc-mean()-X"          
 4. "tBodyAcc-mean()-Y"
 5. "tBodyAcc-mean()-Z"
@@ -89,7 +85,7 @@ Activity column has 6 types as listed below.
 67. "fBodyBodyGyroJerkMag-mean()" 
 68. "fBodyBodyGyroJerkMag-std()"
 
-### variable units
-Activity variable is factor type.
-Subject variable is integer type.
-All the other variables are numeric type.
+### Variable Types
+1. Activity - factor type
+2. Subject - integer type
+3. All not mentioned above - numeric type
