@@ -1,7 +1,9 @@
 # tidy_data description
 
-### Variable description. 
+## Variable description. 
 1. "Activity"
+This determines the type of activity a subject perfomed.  
+Each subject performed six activities on the waist.  
 Activity has 6 levels of factors labelled as follows:
 - 1. WALKING
 - 2. WALKING_UPSTAIRS
@@ -12,11 +14,13 @@ Activity has 6 levels of factors labelled as follows:
 
 
 2. "Subject"
+An identifier of the subject who carried out the expirement.  
 There 30 subjects observed in the data.
 
 
-#### The ff are averaged values of all observations for the Subject and their Activities
-The data set, other than "Activity" and "Subject" contains the mean and standard deviations
+#### The following variables are the mean and standard deviation measurements 
+#### averaged values of all observations for the Subject and their Activities.  
+#### The data set, other than "Activity" and "Subject" contains the mean and standard deviations
 
 3. "tBodyAcc-mean()-X"          
 4. "tBodyAcc-mean()-Y"
@@ -85,7 +89,7 @@ The data set, other than "Activity" and "Subject" contains the mean and standard
 67. "fBodyBodyGyroJerkMag-mean()" 
 68. "fBodyBodyGyroJerkMag-std()"
 
-### Variable Types
+## Variable Types
 1. Activity - factor type
 2. Subject - integer type
 3. All not mentioned above - numeric type
