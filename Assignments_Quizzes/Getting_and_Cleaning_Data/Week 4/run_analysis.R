@@ -10,11 +10,9 @@ url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR
 
 destfile <- paste(path, "/UCI HAR Dataset.zip", sep = "")
 
-destfile <- "/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset.zip"
-
 download.file(url, destfile = destfile)
 
-unzip(path , files = "UCI HAR Dataset.zip", unzip = getOption("unzip"))
+unzip(destfile)
 
 ####################################################################################################
 ####################################################################################################
