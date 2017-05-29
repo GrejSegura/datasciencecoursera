@@ -1,8 +1,8 @@
 # tidy_data description
 
 ## Variable description. 
-1. "Activity"
-This determines the type of activity a subject perfomed.  
+1. "Activity"  
+This determines the type of activity a subject perfomed.
 Each subject performed six activities on the waist.  
 Activity has 6 levels of factors labelled as follows:
 - 1. WALKING
@@ -13,9 +13,10 @@ Activity has 6 levels of factors labelled as follows:
 - 6. LAYING
 
 
-2. "Subject"
+2. "Subject"  
 An identifier of the subject who carried out the expirement.  
 There 30 subjects observed in the data.
+
 
 
 #### The following variables are the mean and standard deviation measurements 
