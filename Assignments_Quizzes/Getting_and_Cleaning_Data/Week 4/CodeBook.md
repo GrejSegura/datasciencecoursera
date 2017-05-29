@@ -1,9 +1,12 @@
 # tidy_data description
 
+The data contains 180 rows and 68 columns.  
+
 ## Variable description. 
+
 1. "Activity"  
 This determines the type of activity a subject perfomed.
-Each subject performed six activities on the waist.  
+Each subject performed six activities while wearing a smartphone on the waist.  
 Activity has 6 levels of factors labelled as follows:
 - 1. WALKING
 - 2. WALKING_UPSTAIRS
@@ -19,9 +22,8 @@ There 30 subjects observed in the data.
 
 
 
-#### The following variables are the mean and standard deviation measurements 
-#### averaged values of all observations for the Subject and their Activities.  
-#### The data set, other than "Activity" and "Subject" contains the mean and standard deviations
+###### The following variables are the mean and standard deviation measurements 
+###### which were averaged between all observations for the Subject.
 
 3. "tBodyAcc-mean()-X"          
 4. "tBodyAcc-mean()-Y"
