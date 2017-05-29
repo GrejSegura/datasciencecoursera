@@ -4,37 +4,41 @@ library(dplyr)
 
 ## Download the zip file and extract
 
+path <- getwd()
+
 url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+
+destfile <- paste(path, "/UCI HAR Dataset.zip", sep = "")
 
 destfile <- "/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset.zip"
 
 download.file(url, destfile = destfile)
 
-unzip("/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/", files = "UCI HAR Dataset.zip", unzip = getOption("unzip"))
+unzip(path , files = "UCI HAR Dataset.zip", unzip = getOption("unzip"))
 
 ####################################################################################################
 ####################################################################################################
 
 ## read the features and activity_labels data
 
-feature_data <- read.table("/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset/features.txt")
+feature_data <- read.table("./UCI HAR Dataset/features.txt")
 
-activity_label <- read.table("/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset/activity_labels.txt")
+activity_label <- read.table("./UCI HAR Dataset/activity_labels.txt")
 
 ## read the data in test folder
-x_test <- read.table("/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset/test/X_test.txt")
+x_test <- read.table("./UCI HAR Dataset/test/X_test.txt")
 
-y_test <- read.table("/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset/test/y_test.txt")
+y_test <- read.table("./UCI HAR Dataset/test/y_test.txt")
 
-subject_test <- read.table("/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset/test/subject_test.txt")
+subject_test <- read.table("./UCI HAR Dataset/test/subject_test.txt")
 
 
 ## read the data in train folder
-x_train <- read.table("/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset/train/X_train.txt")
+x_train <- read.table("./UCI HAR Dataset/train/X_train.txt")
 
-y_train <- read.table("/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset/train/y_train.txt")
+y_train <- read.table("./UCI HAR Dataset/train/y_train.txt")
 
-subject_train <- read.table("/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset/train/subject_train.txt")
+subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 
 
 ## 1. Merges the training and the test sets to create one data set.
@@ -80,5 +84,5 @@ data_1 <- cbind(y_data, x_data, subject_data)
 
 tidy_data <- data_1 %>% group_by(Activity, Subject) %>% summarise_each(funs(mean))
 
-write.table(tidy_data, file = "/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset/tidy_data.txt", row.names = FALSE, col.names = TRUE)
+write.table(tidy_data, file = "./UCI HAR Dataset/tidy_data.txt", row.names = FALSE, col.names = TRUE)
 
