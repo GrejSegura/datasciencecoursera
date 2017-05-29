@@ -10,6 +10,8 @@ url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR
 
 destfile <- paste(path, "/UCI HAR Dataset.zip", sep = "")
 
+destfile <- "/Users/Grejell/Desktop/R/Coursera/Course 3 - Week 4 Assignment/UCI HAR Dataset.zip"
+
 download.file(url, destfile = destfile)
 
 unzip(path , files = "UCI HAR Dataset.zip", unzip = getOption("unzip"))
@@ -20,31 +22,24 @@ unzip(path , files = "UCI HAR Dataset.zip", unzip = getOption("unzip"))
 ## read the features and activity_labels data
 
 feature_data <- read.table("./UCI HAR Dataset/features.txt")
-
 activity_label <- read.table("./UCI HAR Dataset/activity_labels.txt")
 
 ## read the data in test folder
 x_test <- read.table("./UCI HAR Dataset/test/X_test.txt")
-
 y_test <- read.table("./UCI HAR Dataset/test/y_test.txt")
-
 subject_test <- read.table("./UCI HAR Dataset/test/subject_test.txt")
 
 
 ## read the data in train folder
 x_train <- read.table("./UCI HAR Dataset/train/X_train.txt")
-
 y_train <- read.table("./UCI HAR Dataset/train/y_train.txt")
-
 subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 
 
 ## 1. Merges the training and the test sets to create one data set.
 
 x_data <- rbind(x_train, x_test)
-
 y_data <- rbind(y_train, y_test)
-
 subject_data <- rbind(subject_train,  subject_test)
 
 
@@ -67,9 +62,7 @@ y_data[, 1] <- factor(y_data[, 1], levels = activity_label[, 1], labels = activi
 ## 4. Appropriately labels the data set with descriptive variable names.
 
 names(x_data) <- features[feat_index]
-
 names(y_data) <- "Activity"
-
 names(subject_data) <- "Subject"
 
 
