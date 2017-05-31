@@ -16,7 +16,6 @@ data_2[, 5] <- gsub(",", "", data_2[, 5])
 data_2[, 5] <- as.numeric(data_2[, 5])
 data_2 <- data_2[5:194 , 5]
 
-
 ave <- mean(data_2, na.rm = TRUE)
 ave
 
@@ -56,4 +55,6 @@ amzn$year <- year(amzn$date)
 
 
 yr <- amzn[amzn$year == 2012,]
+length(yr)
 wdy <- amzn[amzn$year == 2012 & amzn$wday == "Mon",]
+length(wdy)
