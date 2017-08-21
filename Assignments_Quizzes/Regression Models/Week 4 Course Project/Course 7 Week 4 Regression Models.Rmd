@@ -3,10 +3,8 @@ title: "Course 7 - Regression Models Project"
 author: "Grejell Segura"
 date: "8/21/2017"
 output:
-  pdf_document: default
   html_document: default
-fig.width: 2.5
-fig.height: 1.5
+  pdf_document: default
 ---
 
 ## Excutive Summary
@@ -17,7 +15,6 @@ This report investigated the difference of manual and automatic transmission car
 
 I used a number of libraries to help me with the visualizations and testing.
 ```{r message = FALSE}
-set.seed(4324)
 library(ggplot2)
 library(datasets)
 library(gridExtra)
@@ -31,7 +28,7 @@ library(caret)
 
 First, let us check the data structure.
 ```{r message = FALSE}
-str(mtcars)
+dim(mtcars)
 ```
 
 The data has 32 observations with 11 variables.
@@ -48,7 +45,7 @@ summary(mtcars)
 
 
 To have an initial insight, it is best to visualize the data. We will focus first on mgp and am variables as this is our main concern on this problem. The result can be in Figure 1 below.
-```{r message = FALSE}
+```{r message = FALSE, fig.width=4, fig.height=2.4, fig.align='center'}
 plot.1 <- ggplot(mtcars, aes(x = mpg, fill = am)) + geom_histogram(bins = 32) + labs(title = "Figure 1")
 plot.1
 ```
@@ -57,15 +54,16 @@ plot.1
 Figure 1 shows the distribution of mpg. The colors indicate the 2 types of transmission - manual is shown red while automatic is shown in green. We can see that there is some sort of separation between 2 transmission types where automatic transmission mostly lies to the right and manual lies to the left of the graph. 
 A boxplot was also created to see if there is visual difference between the groups. Looking at Figure 2, we can see a difference of mpg between the 2 types of transmissions. Automatic is visually higher here.
 
-```{r message = FALSE}
+```{r message = FALSE, fig.width=4, fig.height=2.4, fig.align='center'}
 plot.2 <- ggplot(mtcars, aes(x = am, y = mpg, fill = am)) + geom_boxplot() + labs(title = "Figure 2")
+plot.2 <- plot.2 + geom_point()
 plot.2
 ```
 
   
 Another chart was created to examine the relationship of mpg to other categorical variables. The result is showed below as Figure 3.
 
-```{r message = FALSE}
+```{r message = FALSE, fig.align='center'}
 plot.cyl <- ggplot(mtcars, aes(x = mpg, fill = cyl)) + geom_histogram(bins = 32)
 plot.vs <- ggplot(mtcars, aes(x = mpg, fill = vs)) + geom_histogram(bins = 32)
 plot.gear <- ggplot(mtcars, aes(x = mpg, fill = gear)) + geom_histogram(bins = 32)
@@ -77,12 +75,12 @@ Here we can see that there is also some sort of separation between mpg vs. cyl, 
   
 We are done visualizing and examining mpg against the categorical variables. Next is we try to see if it also has some sort of relation with respect to the numerical variables. Let us see by looking at the correlation graph below.
 
-```{r message = FALSE}
+```{r message = FALSE, fig.width=4, fig.height=2.4, fig.align='center'}
 cor <- cor(mtcars[, c("mpg", "disp", "hp", "drat", "wt", "qsec")])
-corrplot(cor, method = "number")
+cor
 ```
   
-Looking at the heatmap, mpg has high negative correlation with disp, hp, and wt. On the other hand, drat has relatively high positive correlation with mpg, qsec meanwhile has the lowest correlation with mpg.
+Looking at the correlation table, mpg has high negative correlation with disp, hp, and wt. On the other hand, drat has relatively high positive correlation with mpg, qsec meanwhile has the lowest correlation with mpg.
 
 ## Inferential Analysis
 
@@ -123,9 +121,8 @@ AIC(model.1, model.2, model.3, model.4)
 The summary shows that the model explains 84.01% of the variance of mpg. The model also has the lowest Akaike Information Criterion (AIC) which means it is the best prediction model among the 4 considered.  
   
 The following are the residual plots to investigate the goodness of fit of model.4.
-```{r message = FALSE}
-plot(model.4)
-grid.arrange
+```{r message = FALSE, fig.width=4, fig.height=2.4, fig.align='center'}
+plot(model.4, panel.first = grid(2, 2))
 ```
   
 The plots shows that the residuals are randomly scattered and distributed. This is a good indication.
@@ -139,6 +136,6 @@ The dwtest is the Durbin-Watson test which tests the existence of autocorrelatio
   
 
 ## Appendix
-```{r message = FALSE}
-featurePlot(mtcars[, -1], mtcars$mpg, plot = "pairs")
+```{r message = FALSE, fig.width=4, fig.height=2.4, fig.align='center'}
+corrplot(cor, method = "number", title = "Correlation Plot")
 ```

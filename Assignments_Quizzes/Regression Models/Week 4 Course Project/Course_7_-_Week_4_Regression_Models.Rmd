@@ -48,7 +48,7 @@ summary(mtcars)
 
 
 To have an initial insight, it is best to visualize the data. We will focus first on mgp and am variables as this is our main concern on this problem. The result can be in Figure 1 below.
-```{r message = FALSE}
+```{r message = FALSE, fig.width = 3, fig.height = 2, align = "center"}
 plot.1 <- ggplot(mtcars, aes(x = mpg, fill = am)) + geom_histogram(bins = 32) + labs(title = "Figure 1")
 plot.1
 ```
