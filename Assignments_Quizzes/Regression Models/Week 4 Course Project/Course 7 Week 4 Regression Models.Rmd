@@ -111,9 +111,10 @@ resid <- model.4$residuals
 resid.pred <- as.data.frame(cbind(resid, predicted))
 plot.2 <- ggplot(resid.pred, aes(x = predicted, y = resid)) + geom_point() + geom_hline(yintercept = 0)
 plot.2 <- plot.2 + labs(title = "Figure 3")
+plot.2
 ```
   
-The plots shows that the residuals are randomly scattered and distributed. This is a good indication.
+The plots shows that the residuals are randomly scattered and distributed around 0 line. This is a good indication.
   
 To make sure, the following diagnostic tests are also considered to see if the model is good enough.
 ```{r message = FALSE}
