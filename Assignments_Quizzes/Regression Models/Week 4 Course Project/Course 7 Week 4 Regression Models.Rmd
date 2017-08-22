@@ -1,15 +1,17 @@
 ---
-title: "Course 7 - Regression Models Project"
+title: "General Linear Modelling"
 author: "Grejell Segura"
 date: "8/21/2017"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
-## Excutive Summary
+# Examining the Difference of Manual and Automatic Cars : Miles per Gallon
 
-This report investigated the difference of manual and automatic transmission cars by looking at their miles/galloon measures. Other variables are also investigated to find possible interactions and confounding effects. The data used is the mtcars taken from the package "datasets".
+### Excutive Summary
+
+This report investigated the difference of manual and automatic transmission cars by looking at their miles/gallon measures. Other variables are also investigated to find possible interactions and confounding effects. The data used is the mtcars taken from the package "datasets".
 
 #### Load Libraries
 
@@ -47,7 +49,7 @@ summary(mtcars$am)
 Looking at the mpg summary, the mean is 20.09 with variance of 36.3241. As for the variable am, there are 19 cars classified as automatic while 13 are manual.
 
 To have an initial insight, it is best to visualize the data. We will focus first on mgp and am variables as this is our main concern on this problem. The result can be in Figure 1 below.
-```{r message = FALSE, fig.width=4, fig.height=2.4, fig.align='center', echo = FALSE}
+```{r message = FALSE, fig.width=4, fig.height=2.4, fig.align='center'}
 plot.1 <- ggplot(mtcars, aes(x = am, y = mpg, fill = am)) + geom_boxplot() + labs(title = "Figure 1")
 plot.1 <- plot.1 + geom_point()
 plot.1
@@ -88,7 +90,7 @@ model.1$coefficients
   
 The model shows the significance of the coefficient in am1. This means there is a 7.245 mpg difference between automatic transmission and manual transmission where manual is higher as per the previous result. However, we should also consider that there are other confounding variables that may also affect the this effect. Therefore, we will proceed on creating a model consisting of some of the variables that may also affect mpg.  
 We wish to build the best model by starting with our model.1 and nesting it by adding 1 variable at a time. The result is shown in the table below.
-```{r message = FALSE, echo = FALSE}
+```{r message = FALSE}
 model.2 <- update(model.1, mpg ~ am + cyl, mtcars)
 model.3 <- update(model.1, mpg ~ am + cyl + hp, mtcars)
 model.4 <- update(model.1, mpg ~ am + cyl + hp + wt, mtcars)
@@ -105,7 +107,7 @@ AIC(model.1, model.2, model.3, model.4)
 The summary shows that the model explains 84.01% of the variance of mpg. The model also has the lowest Akaike Information Criterion (AIC) which means it is the best prediction model among the 4 considered.  
   
 The following is the residual plots to investigate the goodness of fit of model.4.
-```{r message = FALSE, fig.width=4, fig.height=2.4, fig.align='center', echo = FALSE}
+```{r message = FALSE, fig.width=4, fig.height=2.4, fig.align='center'}
 predicted <- predict.lm(model.4, mtcars[, -1])
 resid <- model.4$residuals
 resid.pred <- as.data.frame(cbind(resid, predicted))
@@ -121,12 +123,12 @@ To make sure, the following diagnostic tests are also considered to see if the m
 dwtest(model.4)
 ```
   
-The dwtest is the Durbin-Watson test which tests the existence of autocorrelation in the residuals. As observed, the p-value is greater than 0.5 which means there is no evidence that an autocorrelation exist.  
+The dwtest is the Durbin-Watson test which tests the existence of autocorrelation in the residuals. As observed, the p-value is greater than 0.05 which means there is no evidence that an autocorrelation exist.  
   
 
 ## Appendix
 
-```{r message = FALSE, fig.align='center', echo = FALSE}
+```{r message = FALSE, fig.align='center'}
 plot.cyl <- ggplot(mtcars, aes(x = mpg, fill = cyl)) + geom_histogram(bins = 32)
 plot.vs <- ggplot(mtcars, aes(x = mpg, fill = vs)) + geom_histogram(bins = 32)
 plot.gear <- ggplot(mtcars, aes(x = mpg, fill = gear)) + geom_histogram(bins = 32)
