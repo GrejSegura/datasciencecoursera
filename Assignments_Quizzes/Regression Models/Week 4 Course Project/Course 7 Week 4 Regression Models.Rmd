@@ -57,7 +57,7 @@ Figure 1 shows the distribution of mpg broken down per transmission type. We can
   
 Another chart was created to examine the relationship of mpg to other categorical variables. The result is showed in the Appendix section as Figure 2. Looking at the figure, we can see that there is also some sort of separation between mpg vs. cyl, mpg vs. vs, and mpg vs. gear. As for mpg vs. carb, there is no clear separation to it.
   
-We are done visualizing and examining mpg against the categorical variables. Next is we try to see if it also has some sort of relation with respect to the numerical variables. Let us see by looking at the correlation graph below.
+We are done visualizing and examining mpg against the categorical variables. Next is we try to see if it also has some sort of relation with respect to the numerical variables. Let us see by looking at the correlation table below.
 
 ```{r message = FALSE, fig.width=4, fig.height=2.4, fig.align='center'}
 cor <- cor(mtcars[, c("mpg", "disp", "hp", "drat", "wt", "qsec")])
@@ -71,8 +71,8 @@ Looking at the correlation table, mpg has high negative correlation with disp, h
 Let us now examine the relationships by having an inferential analysis. The main objective is to see if there is an evidence of the difference of 2 types of transmission. We also want to quantify this effect by fitting a model.  
   
 We will use a t-test to determine if there is an evidence of difference in the mpg means for the 2 different types. Looking back at the graph, we have an assumption that automatic transmission has more mpg mean so we will have the hypothesis testing in this manner.  
-Ho : there is no difference of mpg means between 2 types of transmissions
-Ha : automatic transmission has greater mean than manual transmission
+Ho : there is no difference of mpg means between 2 types of transmissions  
+Ha : automatic transmission has greater mean than manual transmission  
 
 ```{r message = FALSE}
 model.1 <- t.test(mpg ~ am, mtcars, alternative = "greater")
