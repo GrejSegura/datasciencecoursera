@@ -53,7 +53,7 @@ plot.1 <- plot.1 + geom_point()
 plot.1
 ```
   
-Figure 1 shows the distribution of mpg broken down per transmission type. We can see that there is some sort of separation between 2 transmission types where automatic transmission has higher median. 
+Figure 1 shows the distribution of mpg broken down per transmission type. We can see that there is some sort of separation between 2 transmission types where manual transmission has higher median. 
   
 Another chart was created to examine the relationship of mpg to other categorical variables. The result is showed in the Appendix section as Figure 2. Looking at the figure, we can see that there is also some sort of separation between mpg vs. cyl, mpg vs. vs, and mpg vs. gear. As for mpg vs. carb, there is no clear separation to it.
   
@@ -72,21 +72,21 @@ Let us now examine the relationships by having an inferential analysis. The main
   
 We will use a t-test to determine if there is an evidence of difference in the mpg means for the 2 different types. Looking back at the graph, we have an assumption that automatic transmission has more mpg mean so we will have the hypothesis testing in this manner.  
 Ho : there is no difference of mpg means between 2 types of transmissions  
-Ha : automatic transmission has greater mean than manual transmission  
+Ha : automatic transmission has lesser mean than manual transmission  
 
 ```{r message = FALSE}
-model.1 <- t.test(mpg ~ am, mtcars, alternative = "greater")
+model.1 <- t.test(mpg ~ am, mtcars, alternative = "less")
 model.1
 ```
 
-The t-test result shows p-value = 0.00069 which very small. Hence we reject the null hypothesis and declare that there is a statistical difference between the 2 transmissions and that automatic transmission has greater mpg mean than its manual counterpart. Ofcourse we dont want to stop the investigation at this point as we also wish to quantify the proven difference. We proceed by linear modelling.
+The t-test result shows p-value = 0.00069 which very small. Hence we reject the null hypothesis and declare that there is a statistical difference between the 2 transmissions and that automatic transmission has lesser mpg mean than its manual counterpart. Ofcourse we dont want to stop the investigation at this point as we also wish to quantify the proven difference. We proceed by linear modelling.
 
 ```{r message = FALSE}
 model.1 <- lm(mpg ~ am, mtcars)
 model.1$coefficients
 ```
   
-The model shows the significance of the coefficient in am1. This means there is a 7.245 mpg difference between automatic transmission and manual transmission. However, we should also consider that there are other confounding variables that may also affect the this effect. Therefore, we will proceed on creating a model consisting of some of the variables that may also affect mpg.  
+The model shows the significance of the coefficient in am1. This means there is a 7.245 mpg difference between automatic transmission and manual transmission where manual is higher as per the previous result. However, we should also consider that there are other confounding variables that may also affect the this effect. Therefore, we will proceed on creating a model consisting of some of the variables that may also affect mpg.  
 We wish to build the best model by starting with our model.1 and nesting it by adding 1 variable at a time. The result is shown in the table below.
 ```{r message = FALSE, echo = FALSE}
 model.2 <- update(model.1, mpg ~ am + cyl, mtcars)
