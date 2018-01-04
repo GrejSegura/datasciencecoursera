@@ -1,0 +1,46 @@
+
+Developing Data Products: Week 04 Assignment
+========================================================
+author: Grejell B. Segura
+date: January 03, 2018
+autosize: true
+
+Overview
+========================================================
+
+This application allows the user to compare some economic indicators of the Philippines. The data was taken from https://www.pids.gov.ph ranging from year 2000 - 2016. The output shows a scatter plot per year where a 3rd dimension shows the size scale for the selected variable.
+
+- The application allows the user to pick 3 economic indicators.
+- The first input is for the X-axis, default value is Population Density.
+- The second iput is for the Y-axis, default value is Population Annual Growth
+- The 3rd input is the size scale, default value is Labor Force.
+
+Here is the link for the app:
+https://grejsegura.shinyapps.io/CourseraShinyApp/
+
+
+Economic Indicators
+========================================================
+autosize: true
+The following are the economic indicators included in the application.
+
+```{r, echo = FALSE}
+library(DT)
+data <- read.csv("./data.csv", sep = ",")
+names(data[,-c(1,2)])
+```
+
+Economic Indicators Summary
+========================================================
+autosize: true
+A summary of 3 of the most significant and common indicator.
+```{r}
+summary(data[, c(3,8,10)])
+```
+
+Interface
+========================================================
+Below is the application's interface.
+```{r, echo = FALSE}
+   knitr::include_graphics("interface.jpg")
+```
