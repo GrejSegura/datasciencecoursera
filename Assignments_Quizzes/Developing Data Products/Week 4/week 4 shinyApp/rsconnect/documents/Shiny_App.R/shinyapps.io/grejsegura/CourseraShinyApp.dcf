@@ -1,0 +1,12 @@
+name: CourseraShinyApp
+title: CourseraShinyApp
+username:
+account: grejsegura
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 253591
+bundleId: 1161352
+url: https://grejsegura.shinyapps.io/CourseraShinyApp/
+when: 1515056766.94467
+asMultiple: FALSE
+asStatic: FALSE
