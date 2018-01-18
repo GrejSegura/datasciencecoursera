@@ -10,6 +10,9 @@
 rm(list = ls())
 library(data.table)
 library(tidyverse)
+library(tidytext)
+library(ggplot2)
+data("stop_words")
 
 # loading the data -- the lines were limited to 60000 to minimize the size
 # textData <- readLines("./dta/en_US.twitter.txt", 60000)
@@ -20,3 +23,14 @@ library(tidyverse)
 newsData <- fread("./dta/newsData.csv", sep = ",")
 blogsData <- fread("./dta/blogsData.csv", sep = ",")
 twitterData <- fread("./dta/twitterData.csv", sep = ",")
+
+textData <- rbind(blogsData, newsData, twitterData)
+
+token <- textData %>% unnest_tokens(word, textData)
+tokenData <- setDT(token)
+
+tokenData <- tokenData %>% anti_join(stop_words)
+
+count <- tokenData %>% count(word, sort = TRUE)
+count <- setDT(count)
+count[1:100,]
