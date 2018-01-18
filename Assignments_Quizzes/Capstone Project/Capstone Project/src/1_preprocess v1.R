@@ -17,3 +17,4 @@ library(tidyverse)
 # textData <- setDT(textData)
 # fwrite(textData, "./dta/twitterData.csv")
 
+newsData <- fread("./dta/newsData.csv", sep = ",")
