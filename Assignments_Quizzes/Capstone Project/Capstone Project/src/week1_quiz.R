@@ -1,11 +1,9 @@
 
-## This is my capstone project for the Data Science Specialization course in Coursera
+## this is my week 1 quiz solution
 ## Author : Grejell B. Segura
 ## Date : 03/37/2038
 
 ## This is the first part of the project which loads and process the data
-
-## Part 3 - Preprocessing the data
 
 rm(list = ls())
 library(data.table)
