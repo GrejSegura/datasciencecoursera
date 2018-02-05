@@ -14,57 +14,43 @@ library(tidytext)
 library(ggplot2)
 data("stop_words")
 
+'# loading the news data 
+textData3 <- readLines("./dta/en_US.news.txt")
+textData3 <- as.data.frame(textData3)
+# loading the blogs data 
+textData2 <- readLines("./dta/en_US.blogs.txt")
+textData2 <- as.data.frame(textData2)
 
-## download the data ##
+# loading the twitter data 
+textData3 <- readLines("./dta/en_US.twitter.txt")
+textData3 <- as.data.frame(textData3)'
+# textData <- setDT(textData)
+# fwrite(textData, "./dta/twitterData.csv")
 
-if(!file.exists("./dta/raw")){
-        dir.create("./dta/raw")
-}
+newsData <- fread("./dta/newsData.csv", sep = ",")
+blogsData <- fread("./dta/blogsData.csv", sep = ",")
+twitterData <- fread("./dta/twitterData.csv", sep = ",")
 
-url <- "https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip"
+textData <- rbind(blogsData, newsData, twitterData)
 
-download.file(url, destfile = "./dta/raw/Coursera-SwiftKey.zip", mode = "wb")
-unzip(zipfile = "./dta/raw/Coursera-SwiftKey.zip", exdir = "./dta/raw")    ## unzip to open files
+index <- sample(nrow(textData), 5000)
+textData <- textData[index, ]
 
-path <- file.path("./dta/raw" , "en_US")
-files <- list.files(path, recursive = TRUE)
+token <- textData %>% unnest_tokens(word, textData)
+tokenData <- setDT(token)
 
+tokenData <- tokenData %>% anti_join(stop_words)
 
-## open twitter data ##
+count <- tokenData %>% count(word, sort = TRUE)
+count <- setDT(count)
+count[1:300,]
 
-con <- file("./dta/raw/final/en_US/en_US.twitter.txt", "r") 
+## 3-gram
+trigram <- textData %>% unnest_tokens(trigram, textData, token = 'ngrams', n = 3)
+trigram <- setDT(trigram)
+trigram <- trigram %>% count(trigram, sort = TRUE)
+trigram <- setDT(trigram)
+trigram[1:300,]
 
-twitterDta <- readLines(con, skipNul = TRUE)
-twitterDta <- as.data.frame(twitterDta)
-names(twitterDta)[1] <- "text"
-close(con)
-
-
-## open news data ##
-
-con <- file("./dta/raw/final/en_US/en_US.news.txt", "r") 
-
-newsDta <- readLines(con, skipNul = TRUE)
-newsDta <- as.data.frame(newsDta)
-names(newsDta)[1] <- "text"
-close(con)
-
-
-## open blog data ##
-
-con <- file("./dta/raw/final/en_US/en_US.blogs.txt", "r") 
-
-blogDta <- readLines(con, skipNul = TRUE)
-blogDta <- as.data.frame(blogDta)
-names(blogDta)[1] <- "text"
-close(con)
-
-
-## bind data to make 1 data frame ## 
-
-
-
-
-textData <- rbind(blogDta, newsDta, twitterDta)
-save(textData, file = "./dta/textData.RData")
-
+names <- paste("v", c(1:3), sep = "")
+trigram[, names := strsplit(trigram, " "), with = FALSE]
