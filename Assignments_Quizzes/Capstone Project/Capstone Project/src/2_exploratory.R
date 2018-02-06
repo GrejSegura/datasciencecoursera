@@ -5,7 +5,7 @@ library(tidytext)
 library(ggplot2)
 data("stop_words")
 
-textData <- load("./dta/raw/textData.RData")
+load("./dta/textData.RData") 
 
 index <- sample(nrow(textData), 5000)
 textData <- textData[index, ]
