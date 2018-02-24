@@ -1,0 +1,24 @@
+---
+title: "Data Science Capstone - Week 2 Assignment"
+author: "Grejell Segura"
+date: "February 24, 2018"
+output: html_document
+---
+
+
+## Overview
+
+This project aims to show a simple exploratory data analysis about the news, blogs and twitter data.
+
+
+# Libraries and Packages
+
+```{r, echo = FALSE, warning = FALSE}
+library(data.table)
+library(tidyverse)
+library(tm)
+```
+
+# Loading the Data
+
+You can also embed plots, for example:
