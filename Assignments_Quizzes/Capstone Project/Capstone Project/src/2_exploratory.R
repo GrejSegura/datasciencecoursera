@@ -5,11 +5,11 @@ library(tidytext)
 library(ggplot2)
 data("stop_words")
 
-load("./dta/textData.RData") 
+load("./dta/textDta.RData") 
 
 index <- sample(nrow(textData), 5000)
-textData <- textData[index, ]
-
+textData <- textData[index, -2]
+textData <- as.character(unlist(textData))
 token <- textData %>% unnest_tokens(word, textData)
 tokenData <- setDT(token)
 

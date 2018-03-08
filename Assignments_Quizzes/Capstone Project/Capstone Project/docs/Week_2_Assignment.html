@@ -132,19 +132,18 @@ $(document).ready(function () {
 </div>
 <div id="libraries-and-packages" class="section level1">
 <h1>Libraries and Packages</h1>
-<pre><code>## Loading tidyverse: ggplot2
-## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr</code></pre>
-<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
-<pre><code>## between():   dplyr, data.table
-## filter():    dplyr, stats
-## first():     dplyr, data.table
-## lag():       dplyr, stats
-## last():      dplyr, data.table
-## transpose(): purrr, data.table</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 2.2.1     v purrr   0.2.4
+## v tibble  1.4.2     v dplyr   0.7.4
+## v tidyr   0.8.0     v stringr 1.3.0
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------------------------------------------------------------------ tidyverse_conflicts() --
+## x dplyr::between()   masks data.table::between()
+## x dplyr::filter()    masks stats::filter()
+## x dplyr::first()     masks data.table::first()
+## x dplyr::lag()       masks stats::lag()
+## x dplyr::last()      masks data.table::last()
+## x purrr::transpose() masks data.table::transpose()</code></pre>
 <pre><code>## Loading required package: NLP</code></pre>
 <pre><code>## 
 ## Attaching package: 'NLP'</code></pre>
@@ -154,7 +153,18 @@ $(document).ready(function () {
 </div>
 <div id="loading-the-data" class="section level1">
 <h1>Loading the Data</h1>
-<p>You can also embed plots, for example:</p>
+<p>The data was preloaded in another script shown in the appendix below.</p>
+<p>Checking the dimension of the data.</p>
+<pre><code>##                       text            source         
+##  Thanks for the RT!     :    571   Length:3336695    
+##  Thank you!             :    547   Class :character  
+##  thank you!             :    382   Mode  :character  
+##  Thanks for the follow! :    326                     
+##  Thanks for the mention!:    188                     
+##  thanks for the RT!     :    185                     
+##  (Other)                :3334496</code></pre>
+<pre><code>##    blog    news twitter 
+##  899288   77259 2360148</code></pre>
 </div>
 
 

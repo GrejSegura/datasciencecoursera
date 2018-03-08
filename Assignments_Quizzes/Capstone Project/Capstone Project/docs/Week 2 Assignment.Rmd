@@ -14,11 +14,72 @@ This project aims to show a simple exploratory data analysis about the news, blo
 # Libraries and Packages
 
 ```{r, echo = FALSE, warning = FALSE}
+rm(list = ls())
 library(data.table)
 library(tidyverse)
 library(tm)
+library(dplyr)
 ```
 
 # Loading the Data
 
-You can also embed plots, for example:
+The data was preloaded in another script shown in the appendix below.
+```{r, echo = FALSE, warning = FALSE}
+
+load("./dta/textDta.RData")
+
+```
+
+Checking the summary of the data.
+```{r, echo = FALSE, warning = FALSE}
+
+summary(textDta)
+summary(as.factor(textDta$source))
+
+```
+Blog has 899,288 rows, news has 77,259 while twitter data has 2,360,148 rows.
+
+
+## Load the Stopping Words
+Depending on the type of analysis, stop words are used to exclude the words that are very common. In this project, I used the pre-existing stop words data called "stop_words". The data summary is shown below.
+
+```{r, echo = FALSE}
+
+data("stop_words")
+'summary(stop_words)
+'
+```
+There are 1,149 words listed in the stop words which we will use in the following data exploration.
+
+
+## Tokenization of the Data
+
+Tokenization is the process of breaking up a sequence of strings into words or phrases.
+The term used to determine the number of sequence of words in tokenization is "n-gram".
+The "n" describes the number of words in the sequence. Here we will explore different sequences, 1-gram, 2-gram and 3-gram.
+
+### 1-gram
+We will first explore the data by applying 1-gram. The data was split into its sources (news, blog, twitter). The top 20 words were shown
+``` {r, echo = FALSE}
+textDta$text <- as.character(textDta$text)
+sources <- unique(textDta$source)
+top20 <- data.frame()
+for (i in sources){
+        tokenData <- textDta[textDta$source == i, -2] %>% unnest_tokens(word, text)
+        tokenData <- setDT(tokenData)
+        tokenData <- tokenData %>% anti_join(stop_words)
+        count <- tokenData %>% count(word, sort = TRUE)
+        count <- setDT(count)
+        print(count[1:20,])
+}
+```
+
+## 3-gram
+trigram <- textDta %>% unnest_tokens(trigram, textDta, token = 'ngrams', n = 3)
+trigram <- setDT(trigram)
+trigram <- trigram %>% count(trigram, sort = TRUE)
+trigram <- setDT(trigram)
+trigram[1:300,]
+
+names <- paste("v", c(1:3), sep = "")
+trigram[, names := strsplit(trigram, " "), with = FALSE]
