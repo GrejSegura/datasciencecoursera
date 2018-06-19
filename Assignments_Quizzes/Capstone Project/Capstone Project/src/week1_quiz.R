@@ -13,14 +13,14 @@ library(ggplot2)
 data("stop_words")
 
 # loading the news data 
-textData3 <- readLines("./dta/en_US.news.txt")
+textData3 <- readRDS("./dta/newsDta.rda")
 textData3 <- as.data.frame(textData3)
 # loading the blogs data 
-textData2 <- readLines("./dta/en_US.blogs.txt")
+textData2 <- readRDS("./dta/blogDta.rda")
 textData2 <- as.data.frame(textData2)
 
 # loading the twitter data 
-textData3 <- readLines("./dta/en_US.twitter.txt")
+textData3 <- readRDS("./dta/twitterDta.rda")
 textData3 <- as.data.frame(textData3)
 # textData <- setDT(textData)
 # fwrite(textData, "./dta/twitterData.csv")

@@ -7,13 +7,14 @@ data("stop_words")
 
 load("./dta/textDta.RData") 
 
-index <- sample(nrow(textData), 5000)
-textData <- textData[index, -2]
-textData <- as.character(unlist(textData))
-token <- textData %>% unnest_tokens(word, textData)
-tokenData <- setDT(token)
+index <- sample(nrow(textDta), 5000)
+textDta <- textDta[index, ]
+textDta$text <- as.character(unlist(textDta$text))
 
-tokenData <- tokenData %>% anti_join(stop_words)
+token <- textDta %>% unnest_tokens(word, text)
+textDta <- setDT(token)
+
+textDta <- textDta %>% anti_join(stop_words)
 
 count <- tokenData %>% count(word, sort = TRUE)
 count <- setDT(count)

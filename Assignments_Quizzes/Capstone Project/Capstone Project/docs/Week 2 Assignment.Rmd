@@ -1,85 +1,160 @@
 ---
-title: "Data Science Capstone - Week 2 Assignment"
+title: "Data Science Capstone Week 2 Assignment"
 author: "Grejell Segura"
-date: "February 24, 2018"
-output: html_document
+date: "June 18, 2018"
+output:
+        html_document:
+                fig_width: 10
+                fig_height: 4
 ---
 
 
 ## Overview
 
-This project aims to show a simple exploratory data analysis about the news, blogs and twitter data.
+This document aims to show a simple exploratory data analysis about the news, blogs and twitter data.
 
-
-# Libraries and Packages
-
-```{r, echo = FALSE, warning = FALSE}
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 rm(list = ls())
 library(data.table)
 library(tidyverse)
-library(tm)
+library(tidytext)
 library(dplyr)
+library(ggplot2)
 ```
 
-# Loading the Data
+### Loading the Data
 
-The data was preloaded in another script shown in the appendix below.
-```{r, echo = FALSE, warning = FALSE}
-
+The data was preloaded in another script shown in the Appendix below. Checking the summary of the data.
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 load("./dta/textDta.RData")
-
-```
-
-Checking the summary of the data.
-```{r, echo = FALSE, warning = FALSE}
-
 summary(textDta)
 summary(as.factor(textDta$source))
-
 ```
-Blog has 899,288 rows, news has 77,259 while twitter data has 2,360,148 rows.
 
+Since the the data is too big to process, we will only use 5% of the observations which are randomly selected. Below are the distribution of the samples per source.
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
+textDta <- textDta[sample(1:nrow(textDta), 0.05*nrow(textDta)),]
+summary(as.factor(textDta$source))
+```
 
-## Load the Stopping Words
+### Stop Words
 Depending on the type of analysis, stop words are used to exclude the words that are very common. In this project, I used the pre-existing stop words data called "stop_words". The data summary is shown below.
 
-```{r, echo = FALSE}
-
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
 data("stop_words")
-'summary(stop_words)
-'
+str(stop_words)
 ```
 There are 1,149 words listed in the stop words which we will use in the following data exploration.
 
 
-## Tokenization of the Data
+### Tokenization of the Data
 
 Tokenization is the process of breaking up a sequence of strings into words or phrases.
 The term used to determine the number of sequence of words in tokenization is "n-gram".
 The "n" describes the number of words in the sequence. Here we will explore different sequences, 1-gram, 2-gram and 3-gram.
 
-### 1-gram
-We will first explore the data by applying 1-gram. The data was split into its sources (news, blog, twitter). The top 20 words were shown
-``` {r, echo = FALSE}
+The following are the top 20 1-gram, 2-gram and 3-grams. It is important to note that this is a sample and a margin error should be considered when analysing.
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
 textDta$text <- as.character(textDta$text)
-sources <- unique(textDta$source)
-top20 <- data.frame()
-for (i in sources){
-        tokenData <- textDta[textDta$source == i, -2] %>% unnest_tokens(word, text)
-        tokenData <- setDT(tokenData)
-        tokenData <- tokenData %>% anti_join(stop_words)
-        count <- tokenData %>% count(word, sort = TRUE)
-        count <- setDT(count)
-        print(count[1:20,])
-}
+
+# for news
+unigram <- textDta %>% unnest_tokens(word, text)
+unigram <- setDT(unigram)
+unigram <- unigram[(grepl('[A-z]', unigram$word)),]
+unigram <- unigram[!(grepl('â', unigram$word)),]
+unigram <- unigram %>% anti_join(stop_words)
+count <- unigram %>% count(word, sort = TRUE)
+count <- setDT(count)
+```
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(count[1:20,], aes(x = reorder(word, -n), y = n)) + geom_bar(stat = 'identity', width = 0.7, fill ='#379683') + theme_classic() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + labs(x = "most frequent words", y = "frequency", main = '1-Gram')
 ```
 
-## 3-gram
-trigram <- textDta %>% unnest_tokens(trigram, textDta, token = 'ngrams', n = 3)
-trigram <- setDT(trigram)
-trigram <- trigram %>% count(trigram, sort = TRUE)
-trigram <- setDT(trigram)
-trigram[1:300,]
 
-names <- paste("v", c(1:3), sep = "")
-trigram[, names := strsplit(trigram, " "), with = FALSE]
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+bigram <- textDta %>% unnest_tokens(bigram, text, token = 'ngrams', n = 2)
+bigram <- setDT(bigram)
+index <- grepl('[A-z]', bigram$bigram)
+bigram <- bigram[index,]
+index <- grepl('â', bigram$bigram)
+bigram <- bigram[!(index),]
+countBigram <- bigram %>% count(bigram, sort = TRUE)
+countBigram <- setDT(countBigram)
+```
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(countBigram[1:20,], aes(x = reorder(bigram, -n), y = n)) + geom_bar(stat = 'identity', width = 0.7, fill ='#7395AE') + theme_classic() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + labs(x = "most frequent bigram", y = "frequency", main = '2-Gram')
+```
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+trigram <- textDta %>% unnest_tokens(trigram, text, token = 'ngrams', n = 3)
+trigram <- setDT(trigram)
+index <- grepl('[A-z]', trigram$trigram)
+trigram <- trigram[index,]
+index <- grepl('â', trigram$trigram)
+trigram <- trigram[!(index),]
+countTrigram <- trigram %>% count(trigram, sort = TRUE)
+countTrigram <- setDT(countTrigram)
+```
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(countTrigram[1:20,], aes(x = reorder(trigram, -n), y = n)) + geom_bar(stat = 'identity', width = 0.7, fill = '#557A95') + theme_classic() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + labs(x = "most frequent trigram", y = "frequency", main = '3-Gram')
+```
+
+## Path Forward
+
+The project requires to predict the next word when typing in a keyboard. The best approach to achieve this is by using n-grams and applying a prediction algorithm afterwards. I will most likely utilize the Stupid backoff algorithm as it is very well suited for this type of data.
+
+
+### Appendix
+
+Below is the R code I used to read and save the data.
+```{r, eval = FALSE}
+rm(list = ls())
+library(tidyverse)
+library(tidytext)
+library(ggplot2)
+
+## download the data ##
+if(!file.exists("./dta/raw")){
+        dir.create("./dta/raw")
+}
+url <- "https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip"
+download.file(url, destfile = "./dta/raw/Coursera-SwiftKey.zip", mode = "wb")
+unzip(zipfile = "./dta/raw/Coursera-SwiftKey.zip", exdir = "./dta/raw")    ## unzip to open files
+path <- file.path("./dta/raw" , "en_US")
+files <- list.files(path, recursive = TRUE)
+
+## open twitter data ##
+con <- file("./dta/raw/final/en_US/en_US.twitter.txt", "r") 
+twitterDta <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
+twitterDta <- as.data.frame(twitterDta)
+names(twitterDta)[1] <- "text"
+twitterDta$source <- "twitter"  ## add an identifier to what data source it belongs
+close(con)
+save(twitterDta, file = "./dta/twitterDta.RData")
+
+## open news data ##
+con <- file("./dta/raw/final/en_US/en_US.news.txt", "r") 
+newsDta <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
+newsDta <- as.data.frame(newsDta)
+names(newsDta)[1] <- "text"
+newsDta$source <- "news"  ## add an identifier to what data source it belongs
+close(con)
+save(newsDta, file = "./dta/newsDta.RData")
+
+## open blog data ##
+con <- file("./dta/raw/final/en_US/en_US.blogs.txt", "r") 
+blogDta <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
+blogDta <- as.data.frame(blogDta)
+names(blogDta)[1] <- "text"
+blogDta$source <- "blog"  ## add an identifier to what data source it belongs
+close(con)
+save(blogDta, file = "./dta/blogDta.RData")
+
+## bind data to make 1 data frame ## 
+textDta <- rbind(blogDta, newsDta, twitterDta)
+save(textDta, file = "./dta/textDta.RData")
+```

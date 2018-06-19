@@ -1,7 +1,7 @@
 
 ## This is my capstone project for the Data Science Specialization course in Coursera
 ## Author : Grejell B. Segura
-## Date : 03/37/2038
+## Date : 1/17/2018
 
 ## This is the first part of the project which loads and process the data
 
@@ -67,9 +67,6 @@ save(blogDta, file = "./dta/blogDta.RData")
 
 
 ## bind data to make 1 data frame ## 
-
-
-
 
 textDta <- rbind(blogDta, newsDta, twitterDta)
 save(textDta, file = "./dta/textDta.RData")
