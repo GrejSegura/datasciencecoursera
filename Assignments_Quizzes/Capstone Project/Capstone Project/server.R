@@ -1,5 +1,7 @@
 
-source("./src/4_stpdBackOffAlgorithm.R")
+source("./src/stpdBackOffAlgorithm.R")
+source("./src/replaceText.R")
+
 
 shinyServer(function(input, output){
         output$predict <- renderText({

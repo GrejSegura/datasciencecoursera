@@ -1,3 +1,5 @@
+# Create functions to create n-gram data
+
 
 library(data.table)
 library(tidyverse)
@@ -5,7 +7,6 @@ library(tidytext)
 library(dplyr)
 library(tm)
 
-#load("./dta/textDta.RData")
 createUniGram <- function(textDta){
         #load("./dta/textDta.RData")
         textDta <- textDta[sample(1:nrow(textDta), nrow(textDta)), -2]
@@ -26,7 +27,7 @@ createUniGram <- function(textDta){
         unigram <- setDT(unigram)
         
         saveRDS(unigram, './dta/unigram.RData')
-        View(unigram)
+        #View(unigram)
 }
 
 

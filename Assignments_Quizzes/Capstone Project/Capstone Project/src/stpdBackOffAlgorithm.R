@@ -1,3 +1,4 @@
+# A simple stupid backoff algorithm
 
 library(data.table)
 library(tidyverse)
