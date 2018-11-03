@@ -24,6 +24,7 @@ createUniGram <- function(textDta){
         unigram <- unigram %>% unnest_tokens(word, textDta)
         unigram <- setDT(unigram)
         unigram <- unigram %>% count(word, sort = TRUE)
+        names(unigram)[1] <- 'nextWord'
         unigram <- setDT(unigram)
         
         saveRDS(unigram, './dta/unigram.RData')
