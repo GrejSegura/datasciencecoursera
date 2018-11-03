@@ -60,12 +60,14 @@ replaceText <- function(sentence){
         sentence <- gsub("\\bgr8\\b", "great", sentence)
         sentence <- gsub('[^A-z0-9[:space:]]',"", sentence)
         
-        content2 = Corpus(VectorSource(sentence))
+        doc_ids <- c(1)
+        sentence <- data.frame(doc_id = doc_ids, text = sentence, stringsAsFactors = FALSE)
+        content2 = Corpus(DataframeSource(sentence))
         content2 = tm_map(content2, removeNumbers)
         #content2 = tm_map(content2, removeWords, stopwords(kind = 'en'))
         content2 = tm_map(content2, removePunctuation)
         content2 = tm_map(content2, trimws)
         content2 = tm_map(content2, tolower)
-        content2 = tm_map(content2, PlainTextDocument)
+        #content2 = tm_map(content2, PlainTextDocument)
         return(content2)
 }

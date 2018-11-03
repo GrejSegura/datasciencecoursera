@@ -1,5 +1,5 @@
 
-source("./src/stpdBackOffAlgorithm.R")
+#source("./src/stpdBackOffAlgorithm.R")
 source("./src/replaceText.R")
 
 
@@ -13,9 +13,9 @@ shinyServer(function(input, output){
                 scoreTable <- data.frame()
                 if(numberWords == 0){
                         return('')
-                } else if(numberWords == 1){
-                        return(as.character(unlist(unigramDta[1:5,1])))
-                } else if(numberWords > 1){
+                #} else if(numberWords == 1){
+                #        return(as.character(unlist(unigramDta[1:5,1])))
+                } else if(numberWords >= 1){
                         # match 4 words with nGramData
                         if (numberWords > 4){
                                 numberWords = 4
@@ -38,7 +38,6 @@ shinyServer(function(input, output){
                                 }
                                 return(as.character(unlist(scoreTable[1:5, c('nextWord')])))
                         }
-                        #mutate(score = ((0.4^(i))*frequency)/nrow(setOfNextWord))
                 }
         })
 })                        

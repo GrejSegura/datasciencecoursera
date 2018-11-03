@@ -25,5 +25,9 @@ trigramDta <- readRDS('./dta/trigram.RData')
 quadgramDta <- readRDS('./dta/quadgram.RData')
 fivegramDta <- readRDS('./dta/fivegram.RData')
 
-nGramData <- as.data.frame(rbind(bigramDta, trigramDta, quadgramDta, fivegramDta))
+nGramData <- setDT(as.data.frame(rbind(bigramDta, trigramDta, quadgramDta, fivegramDta)) )
+nGramData <- nGramData[, count := seq_len(.N), by = nextWord]
+nGramData <- nGramData[count > 1,]
+nGramData <- nGramData[, count := NULL]
+
 saveRDS(nGramData, './dta/nGramData.RData')
