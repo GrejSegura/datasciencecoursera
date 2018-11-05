@@ -25,7 +25,7 @@ createUniGram <- function(textDta){
         unigram <- setDT(unigram)
         unigram <- unigram %>% count(word, sort = TRUE)
         names(unigram)[1] <- 'nextWord'
-        unigram <- setDT(unigram)
+        unigram <- setDT(unigram[1:5,])
         
         saveRDS(unigram, './dta/unigram.RData')
         #View(unigram)

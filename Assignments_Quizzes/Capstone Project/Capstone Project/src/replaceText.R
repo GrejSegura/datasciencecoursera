@@ -9,14 +9,17 @@ library(tm)
 
 replaceText <- function(sentence){
         
-        sentence <- gsub("\\bcant\\b", "cannot", sentence)
+        sentence <- gsub("\\bcant\\b", "can not", sentence)
         sentence <- gsub("\\bwont\\b", "will not", sentence)
         sentence <- gsub("\\bshant\\b", "shall not", sentence)
         sentence <- gsub("\\baint\\b", "am not", sentence)
         # verb + negation (isn't, aren't, wasn't, etc.)
         sentence <- gsub("n't\\b", " not", sentence)
+        sentence <- gsub("dnt\\b", "d not", sentence)
+        
         # miscellaneous forms
         sentence <- gsub("\\blets\\b", "let us", sentence)
+        sentence <- gsub("\\blet's\\b", "let us", sentence)
         sentence <- gsub("\\bc'mon\\b", "come on", sentence)
         sentence <- gsub("'n\\b", " and", sentence)
         # pronoun + verb
@@ -26,6 +29,7 @@ replaceText <- function(sentence){
         sentence <- gsub("'d\\b", " would", sentence)
         sentence <- gsub("'ll\\b", " will", sentence)
         sentence <- gsub("'ve\\b", " have", sentence)
+    
         # Replace contractions with full words
         sentence <- gsub("\\bb\\b", "be", sentence)
         sentence <- gsub("\\bc\\b", "see", sentence)
@@ -64,7 +68,7 @@ replaceText <- function(sentence){
         sentence <- data.frame(doc_id = doc_ids, text = sentence, stringsAsFactors = FALSE)
         content2 = Corpus(DataframeSource(sentence))
         content2 = tm_map(content2, removeNumbers)
-        #content2 = tm_map(content2, removeWords, stopwords(kind = 'en'))
+        content2 = tm_map(content2, removeWords, stopwords('english'))
         content2 = tm_map(content2, removePunctuation)
         content2 = tm_map(content2, trimws)
         content2 = tm_map(content2, tolower)

@@ -2,8 +2,35 @@
 #source("./src/stpdBackOffAlgorithm.R")
 source("./src/replaceText.R")
 
+ui <- shinyUI(fluidPage(theme = "bootstrap.css",
+        fluidRow(column(12, align="center",
+                        h4(" ", style="padding:20px;"))),
+        fluidRow(column(12, align="center",
+                img(src='logo.png', align='center', width = 500, height = 200))),
+        #                fluidRow(column(12, align="center",
+        #                        textOutput(" "))),
+        #                fluidRow(column(12, align="center",
+        #                        textOutput(" "))),
+        fluidRow(column(12, align="center",
+                        h4(" ", style="padding:20px;"))),
+        fluidRow(column(12, align="center",
+                        h6(""))),
+        fluidRow(column(12, align="center",
+                        textInput(inputId ='searchBar', label = div(style = "font-weight: normal; font-size:16px; color:#707B7C",'Type a phrase here:'), value = '', width = '600px'))),
+        fluidRow(column(12, align="center",
+                        h4(" ", style="padding:20px;"))),
+        fluidRow(column(12, align="center",
+                        div(style = "font-size:16px; color:#707B7C","Suggested Words:"))),
+        fluidRow(column(12, align="center",
+                        h4(" ", style="font-size:16px; padding:1px;"))),
+        fluidRow(column(12, align="center",
+                        div(style = "font-weight:bold; font-size:22px; color:#2471A3", textOutput("predict"))))
+                )
+        )
 
-shinyServer(function(input, output){
+##################################################################################################################################
+
+server <- shinyServer(function(input, output){
         output$predict <- renderText({
                 sentence <- input$searchBar
                 #                sentence <- 'you have to go to'
@@ -13,8 +40,8 @@ shinyServer(function(input, output){
                 scoreTable <- data.frame()
                 if(numberWords == 0){
                         return('')
-                #} else if(numberWords == 1){
-                #        return(as.character(unlist(unigramDta[1:5,1])))
+                        #} else if(numberWords == 1){
+                        #        return(as.character(unlist(unigramDta[1:5,1])))
                 } else if(numberWords >= 1){
                         # match 4 words with nGramData
                         if (numberWords > 4){
@@ -41,3 +68,5 @@ shinyServer(function(input, output){
                 }
         })
 })                        
+
+shinyApp(ui = ui, server = server)
