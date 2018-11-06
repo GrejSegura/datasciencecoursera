@@ -25,6 +25,7 @@ replaceText <- function(sentence){
         sentence <- gsub("'n\\b", " and", sentence)
         # pronoun + verb
         sentence <- gsub("\\bim\\b", "i am", sentence)
+        sentence <- gsub("\\bima\\b", "i am a", sentence)
         sentence <- gsub("'re\\b", " are", sentence)
         sentence <- gsub("'s\\b", " is", sentence)
         sentence <- gsub("'d\\b", " would", sentence)
@@ -56,13 +57,18 @@ replaceText <- function(sentence){
         sentence <- gsub("\\bb4\\b", "before", sentence)
         sentence <- gsub("\\bcu\\b", "see you", sentence)
         sentence <- gsub("\\bcuz\\b", "because", sentence)
+        sentence <- gsub("\\bcoz\\b", "because", sentence)
         sentence <- gsub("\\btnx\\b", "thanks", sentence)
+        sentence <- gsub("\\btx\\b", "thanks", sentence)
         sentence <- gsub("\\btks\\b", "thanks", sentence)
         sentence <- gsub("\\bthks\\b", "thanks", sentence)
         sentence <- gsub("\\bthanx\\b", "thanks", sentence)
         sentence <- gsub("\\bu2\\b", "you too", sentence)
         sentence <- gsub("\\bur\\b", "your", sentence)
         sentence <- gsub("\\bgr8\\b", "great", sentence)
+        sentence <- gsub("\\bk\\b", "ok", sentence)
+        sentence <- gsub("\\brt\\b", "right", sentence)
+        
         sentence <- gsub('[^A-z0-9[:space:]]',"", sentence)
         
         doc_ids <- c(1)
