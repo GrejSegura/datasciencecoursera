@@ -4,4 +4,6 @@
 .Ruserdata
 archive
 .csv
+.zip
 *.csv
+*.zip
