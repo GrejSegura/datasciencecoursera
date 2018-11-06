@@ -1,34 +1,34 @@
 
-#source("./src/stpdBackOffAlgorithm.R")
 source("./src/replaceText.R")
+nGramData <- fread('./dta/nGramData.csv')
+unigramData <- readRDS('./dta/unigram.RData')
 
 ui <- shinyUI(fluidPage(theme = "bootstrap.css",
         fluidRow(column(12, align="center",
-                        h4(" ", style="padding:20px;"))),
+                h4(" ", style="padding:20px;"))),
         fluidRow(column(12, align="center",
                 img(src='logo.png', align='center', width = 500, height = 200))),
-        #                fluidRow(column(12, align="center",
-        #                        textOutput(" "))),
-        #                fluidRow(column(12, align="center",
-        #                        textOutput(" "))),
         fluidRow(column(12, align="center",
-                        h4(" ", style="padding:20px;"))),
+                h4(" ", style="padding:20px;"))),
         fluidRow(column(12, align="center",
-                        h6(""))),
+                h6(""))),
         fluidRow(column(12, align="center",
-                        textInput(inputId ='searchBar', label = div(style = "font-weight: normal; font-size:16px; color:#707B7C",'Type a phrase here:'), value = '', width = '600px'))),
+                textInput(inputId ='searchBar', label = div(style = "font-weight: normal; font-size:16px; color:#707B7C",'Type a phrase here (English only):'), value = '', width = '600px'))),
         fluidRow(column(12, align="center",
-                        h4(" ", style="padding:20px;"))),
+                h4(" ", style="padding:20px;"))),
         fluidRow(column(12, align="center",
-                        div(style = "font-size:16px; color:#707B7C","Suggested Words:"))),
+                div(style = "font-size:16px; color:#707B7C","Top predicted next word:"))),
         fluidRow(column(12, align="center",
-                        h4(" ", style="font-size:16px; padding:1px;"))),
+                h4(" ", style="font-size:16px; padding:1px;"))),
         fluidRow(column(12, align="center",
-                        div(style = "font-weight:bold; font-size:22px; color:#2471A3", textOutput("predict"))))
+                div(style = "font-weight:bold; font-size:22px; color:#2471A3", textOutput("predict"))))
                 )
         )
 
+
 ##################################################################################################################################
+##################################################################################################################################
+
 
 server <- shinyServer(function(input, output){
         output$predict <- renderText({
@@ -59,7 +59,7 @@ server <- shinyServer(function(input, output){
                                 scoreTable <- scoreTable %>% top_n(n = 5, wt = score)
                                 scoreTable <- scoreTable[!(is.na(scoreTable$nextWord)),]
                                 if (nrow(scoreTable) < 5){
-                                        addUniGram <- as.data.frame(unigramDta[1:(5-nrow(scoreTable)), c('nextWord')])
+                                        addUniGram <- as.data.frame(unigramData[1:(5-nrow(scoreTable)), c('nextWord')])
                                         scoreTable <- as.data.frame(full_join(scoreTable, addUniGram, by = 'nextWord'))
                                         return(as.character(unlist(scoreTable[, c('nextWord')])))
                                 }

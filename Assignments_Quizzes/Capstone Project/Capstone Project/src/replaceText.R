@@ -5,6 +5,7 @@ library(tidyverse)
 library(tidytext)
 library(dplyr)
 library(tm)
+library(shiny)
 
 
 replaceText <- function(sentence){
@@ -68,7 +69,7 @@ replaceText <- function(sentence){
         sentence <- data.frame(doc_id = doc_ids, text = sentence, stringsAsFactors = FALSE)
         content2 = Corpus(DataframeSource(sentence))
         content2 = tm_map(content2, removeNumbers)
-        content2 = tm_map(content2, removeWords, stopwords('english'))
+        #content2 = tm_map(content2, removeWords, stopwords('english'))
         content2 = tm_map(content2, removePunctuation)
         content2 = tm_map(content2, trimws)
         content2 = tm_map(content2, tolower)
