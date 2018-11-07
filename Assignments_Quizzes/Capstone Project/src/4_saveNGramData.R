@@ -1,10 +1,11 @@
 # Saves a corpus of n-grams using the function created in 3_createNGramData.R
 
-source("./src/3_createNGramData.R")
-source("./src/replaceText.R")
+
 
 if(!file.exists("./dta/nGramData.csv") | !file.exists("./dta/unigram.RData")){
         source("./src/1_preprocess.R")
+        source("./src/replaceText.R")
+        source("./src/3_createNGramData.R")
         load("./dta/textDta.RData")
         
         textDta <- textDta[sample(1:nrow(textDta), 0.3*nrow(textDta)),] ## use only 50% of the data to minimize memory
@@ -26,6 +27,5 @@ if(!file.exists("./dta/nGramData.csv") | !file.exists("./dta/unigram.RData")){
         nGramData <- nGramData[, count := NULL]
         
         fwrite(nGramData, './dta/nGramData.csv')
-}
-print('File already loaded!')
+} else {print('File already loaded!')}
 

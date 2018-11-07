@@ -18,7 +18,9 @@ data("stop_words")
 ## download the data ##
 
 if(!file.exists("./dta/textDta.RData")){
-        dir.create("./dta/raw")
+        if(!file.exists("./dta/raw")){
+           dir.create("./dta/raw")
+        }
         url <- "https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip"
         
         download.file(url, destfile = "./dta/raw/Coursera-SwiftKey.zip", mode = "wb")
@@ -68,8 +70,6 @@ if(!file.exists("./dta/textDta.RData")){
         
         textDta <- rbind(blogDta, newsDta, twitterDta)
         save(textDta, file = "./dta/textDta.RData")
-}
-
-print('File already loaded!')
+} else {print('File already loaded!')}
 
 
