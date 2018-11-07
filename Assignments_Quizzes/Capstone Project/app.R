@@ -6,7 +6,7 @@ unigramData <- readRDS('./dta/unigram.RData')
 ui <- shinyUI(
         fluidPage(theme = "bootstrap.css",
                 tabsetPanel(
-                        tabPanel(div(style = "font-weight:bold; font-size:12px; color:#2471A3", 'Home'),
+                        tabPanel(div(style = "font-weight:normal; font-size:12px; color:#2471A3", 'Home'),
                                 fluidRow(column(12, align="center",
                                         h4(" ", style="padding:20px;"))),
                                 fluidRow(column(12, align="center",
@@ -20,19 +20,22 @@ ui <- shinyUI(
                                 fluidRow(column(12, align="center",
                                         h4(" ", style="padding:20px;"))),
                                 fluidRow(column(12, align="center",
-                                        div(style = "font-size:16px; color:#707B7C","Top predicted next word:"))),
+                                        div(style = "font-size:16px; color:#707B7C; padding:20px;","Top predicted next word:"))),
                                 fluidRow(column(12, align="center",
-                                        h4(" ", style="font-size:16px; padding:1px;"))),
-                                fluidRow(column(12, align="center",
-                                        div(style = "font-weight:bold; font-size:22px; color:#2471A3", 
-                                            textOutput("predict"))))
+                                        actionButton(style="font-weight:normal; color: #202121; background-color: #D7DDE3; font-size: 16px","button",
+                                                textOutput('predict'))))
+                                #fluidRow(column(12, align="center",
+                                #        div(style = "font-weight:bold; font-size:22px; color:#2471A3; font-family:courier new", 
+                                #            textOutput("predict"))))
                                 ),  #this closes the tabPanel1
-                        tabPanel(div(style = "font-weight:bold; font-size:12px; color:#2471A3", 'About the App'),
+                        tabPanel(div(style = "font-weight:normal; font-size:12px; color:#2471A3", 'About the App'),
                                  fluidRow(column(12, align="center",
                                         img(src='logo.png', align='center', width = 400, height = 160))),
                                  fluidRow(column(12, align="center",
-                                        div(style = "font-weight:bold; font-size:22px; color:#2471A3", 
-                                            textOutput("predict"))))
+                                                 h4(" ", style="padding:20px;"))),
+                                 fluidRow(column(12, align="center",
+                                        div(style = "font-weight:bold; font-size:22px; color:#2471A3; font-family:courier new", 
+                                            "This page is currently under construction!")))
                                  ) #this closes the tabPanel2
                         ) #this closes the tabsetPanels
                 ) #this closes the fluidPage
@@ -44,14 +47,15 @@ ui <- shinyUI(
 
 
 server <- shinyServer(function(input, output){
-        output$predict <- renderText({
+        observeEvent(input$button,
+                {output$predict <- renderText({
                 sentence <- input$searchBar
                 wordBreakDown <- unlist(replaceText(sentence))
                 wordBreakDown <- strsplit(wordBreakDown, split = " ")[[1]]
                 numberWords <- length(wordBreakDown)
                 scoreTable <- data.frame()
                 if(numberWords == 0){
-                        return('')
+                        return('^_^')
                 } else if(numberWords >= 1){
                         # match 4 words with nGramData
                         if (numberWords > 4){
@@ -71,12 +75,13 @@ server <- shinyServer(function(input, output){
                                 if (nrow(scoreTable) < 5){
                                         addUniGram <- as.data.frame(unigramData[1:(5-nrow(scoreTable)), c('nextWord')])
                                         scoreTable <- as.data.frame(full_join(scoreTable, addUniGram, by = 'nextWord'))
-                                        return(as.character(unlist(scoreTable[, c('nextWord')])))
+                                        return(as.character(unlist(scoreTable[1, c('nextWord')])))
                                 }
-                                return(as.character(unlist(scoreTable[1:5, c('nextWord')])))
+                                return(as.character(unlist(scoreTable[1, c('nextWord')])))
                         }
                 }
-        })
+        })}
+        )
 })                        
 
 shinyApp(ui = ui, server = server)
