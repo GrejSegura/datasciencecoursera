@@ -24,11 +24,15 @@ ui <- shinyUI(
                                 fluidRow(column(12, align="center",
                                         h4(" ", style="font-size:16px; padding:1px;"))),
                                 fluidRow(column(12, align="center",
-                                        div(style = "font-weight:bold; font-size:22px; color:#2471A3", textOutput("predict"))))
+                                        div(style = "font-weight:bold; font-size:22px; color:#2471A3", 
+                                            textOutput("predict"))))
                                 ),  #this closes the tabPanel1
                         tabPanel(div(style = "font-weight:bold; font-size:12px; color:#2471A3", 'About the App'),
                                  fluidRow(column(12, align="center",
-                                        img(src='logo.png', align='center', width = 400, height = 160)))
+                                        img(src='logo.png', align='center', width = 400, height = 160))),
+                                 fluidRow(column(12, align="center",
+                                        div(style = "font-weight:bold; font-size:22px; color:#2471A3", 
+                                            textOutput("predict"))))
                                  ) #this closes the tabPanel2
                         ) #this closes the tabsetPanels
                 ) #this closes the fluidPage
